@@ -244,6 +244,9 @@ class NovaComputeLibvirtContext(context.OSContextGenerator):
         if config('libvirt-image-backend'):
             ctxt['libvirt_images_type'] = config('libvirt-image-backend')
 
+        if config('force-raw-images'):
+            ctxt['force_raw_images'] = config('force_raw_images')
+
         return ctxt
 
 
