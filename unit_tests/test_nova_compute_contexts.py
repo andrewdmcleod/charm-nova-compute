@@ -227,6 +227,42 @@ class NovaComputeContextTests(CharmTestCase):
              'host_uuid': self.host_uuid,
              'reserved_host_memory': 512}, libvirt())
 
+    def test_libvirt_context_libvirtd_zesty_ocata(self):
+        self.lsb_release.return_value = {'DISTRIB_CODENAME': 'zesty'}
+        self.os_release.return_value = 'ocata'
+        self.kv.return_value = FakeUnitdata(**{'host_uuid': self.host_uuid})
+        self.test_config.set('force-raw-images', False)
+        libvirt = context.NovaComputeLibvirtContext()
+
+        self.assertEqual(
+            {'libvirtd_opts': '',
+             'libvirt_user': 'libvirt',
+             'arch': platform.machine(),
+             'ksm': 'AUTO',
+             'kvm_hugepages': 0,
+             'listen_tls': 0,
+             'host_uuid': self.host_uuid,
+             'force_raw_images': False,
+             'reserved_host_memory': 512}, libvirt())
+
+    def test_libvirt_context_libvirtd_artful_pike(self):
+        self.lsb_release.return_value = {'DISTRIB_CODENAME': 'artful'}
+        self.os_release.return_value = 'pike'
+        self.kv.return_value = FakeUnitdata(**{'host_uuid': self.host_uuid})
+        self.test_config.set('force-raw-images', False)
+        libvirt = context.NovaComputeLibvirtContext()
+
+        self.assertEqual(
+            {'libvirtd_opts': '',
+             'libvirt_user': 'libvirt',
+             'arch': platform.machine(),
+             'ksm': 'AUTO',
+             'kvm_hugepages': 0,
+             'listen_tls': 0,
+             'host_uuid': self.host_uuid,
+             'force_raw_images': False,
+             'reserved_host_memory': 512}, libvirt())
+
     def test_libvirt_bin_context_no_migration(self):
         self.lsb_release.return_value = {'DISTRIB_CODENAME': 'lucid'}
         self.kv.return_value = FakeUnitdata(**{'host_uuid': self.host_uuid})

@@ -273,6 +273,14 @@ options:
       Tell Nova which libvirt image backend to use. Supported backends are rbd,
       lvm and qcow2. If no backend is specified, the Nova default (qcow2) is
       used. Note that rbd imagebackend is only supported with >= Juno.
+  force-raw-images:
+    type: boolean
+    default: True
+    description: |
+      Force conversion of backing images to raw format. Note that the conversion 
+      process in Pike uses O_DIRECT calls - certain file systems do not support this, 
+      for example ZFS; e.g. if using the LXD provider with ZFS backend, this option 
+      should be set to False.
   rbd-pool:
     type: string
     default: 'nova'
